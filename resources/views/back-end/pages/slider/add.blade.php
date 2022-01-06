@@ -10,17 +10,17 @@
                     @csrf
                     <div class="form-group">
                         <label for="">Tên slider</label>
-                        <input name="name" type="text" class="form-control" id="name-slider-add" placeholder="Nhập vào tên slider">
+                        <input name="name" type="text" class="form-control" id="name-slider-add" placeholder="Nhập vào tên slider" required>
                     </div>
 
                     <div class="form-group">
                         <label for="">Ảnh slider</label>
-                        <input name="image" type="file" class="form-control" id="image-slider-add">
+                        <input name="image" type="file" class="form-control" id="image-slider-add" required>
                     </div>
 
                     <div class="form-group">
                         <label for="description">Mô tả</label>
-                        <textarea name="description" class="form-control" id="description-slider-add" rows="3"></textarea>
+                        <textarea name="description" class="form-control" id="description-slider-add" rows="3" required></textarea>
                     </div>
 
                     <div class="form-group">

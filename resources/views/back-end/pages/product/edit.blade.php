@@ -44,12 +44,15 @@
                     <!-- <img src="" alt="Ảnh sản phẩm" id="img-product-edit" width="120px" class="mb-2"> -->
                     <!-- <p class="error text-center alert alert-danger hidden"></p> -->
                 </div>
-
                 <div class="form-group">
-                    <label for="">Khuyến mãi</label>
-                    <input name="promotional" type="number" class="form-control" id="promotional-product-edit">
-                    <!-- <p class="error text-center alert alert-danger hidden"></p> -->
-                </div>
+                  <label for="">Khuyến mãi</label>
+                  <select name="idPromotion" id="promotion-product-edit" class="form-control" required="required">
+                      @foreach($promotion as $key => $value)
+                      <option value="{{ $value->id }}">{{ $value->name }}</option>
+                      @endforeach
+                  </select>
+                  <!-- <p class="error text-center alert alert-danger hidden"></p> -->
+              </div>
                 <div class="form-group">
                     <label for="">Mô tả</label>
                     <textarea name="description" id="description-product-edit" cols="5" rows="5" class="ckeditor form-control"></textarea>

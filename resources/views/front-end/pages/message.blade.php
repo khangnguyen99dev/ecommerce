@@ -3,7 +3,7 @@
     <!-- <div class="chat-start">Monday, 1:27 PM</div> -->
     <div class="chat-bubble {{ $message->from == Auth::id() ? 'me' : 'you'}}">
         {{ $message->message }}
-        <p class="date">{{ date('d M y, h:i a', strtotime($message->created_at)) }}</p>
+        <!-- <p class="date">{{ date('d M y, h:i a', strtotime($message->created_at)) }}</p> -->
     </div>
 @endforeach
 </div>

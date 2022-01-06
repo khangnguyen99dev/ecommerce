@@ -14,17 +14,17 @@
             </div>
             <div class="form-group">
                 <label for="">Tên slider</label>
-                <input name="name" type="text" class="form-control" id="name-slider-edit">
+                <input name="name" type="text" class="form-control" id="name-slider-edit" required>
             </div>         
             <div class="form-group">
                 <label for="" style="display: block">Ảnh slider</label>
                 <img src="" alt="" id="img-slider-show" width="120px" class="mb-2">
-                <input name="image" type="file" class="form-control" id="image-slider-edit">
+                <input name="image" type="file" class="form-control" id="image-slider-edit" >
             </div>
 
             <div class="form-group">
                 <label for="description">Mô tả</label>
-                <textarea name="description" class="form-control" id="description-slider-edit" rows="3"></textarea>
+                <textarea name="description" class="form-control" id="description-slider-edit" rows="3" required></textarea>
             </div>
 
             <div class="form-group">

@@ -6,16 +6,16 @@
     </button>
 
     <!-- Topbar Search -->
-    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    {{-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
         <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+            <input type="text" class="form-control bg-light border-0 small" placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
+                <button class="btn btn-primary" type="submit">
                     <i class="fas fa-search fa-sm"></i>
                 </button>
             </div>
         </div>
-    </form>
+    </form> --}}
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
@@ -29,7 +29,7 @@
             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                     <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Tìm kiếm..." aria-label="Search" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="button">
                                 <i class="fas fa-search fa-sm"></i>
@@ -133,7 +133,7 @@
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                     <div class="dropdown-list-image mr-3">
-                        <!-- <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt=""> -->
+                        {{-- <img class="rounded-circle" src="/assets/img/avatar/" alt=""> --}}
                         <div class="status-indicator bg-success"></div>
                     </div>
                     <div>
@@ -150,23 +150,43 @@
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                <!-- <img class="img-profile rounded-circle" src="img/undraw_profile.svg"> -->
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                    @php
+                        if(Auth::check()){
+                            echo Auth::user()->name;
+                        }
+                    @endphp
+                    
+                </span>
+                <img class="img-profile rounded-circle" src="{{ (Auth::user()->avatar != NULL) ? 'assets/img/upload/avatar/'.Auth::user()->avatar : 'https://via.placeholder.com/150' }}"> 
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Profile
+                @if(Auth::user()->role == 1)
+                <a class="dropdown-item" href="{{ route('profile')}}">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Thông tin tài khoản
                 </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i> Settings
+                <a class="dropdown-item" href="{{ route('changePass')}}">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Đổi mật khẩu
                 </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity Log
+                @elseif(Auth::user()->role == 2)
+                <a class="dropdown-item" href="employee/profile">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Thông tin tài khoản
                 </a>
+                <a class="dropdown-item" href="employee/changePass">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Đổi mật khẩu
+                </a>
+                @elseif(Auth::user()->role == 3)
+                <a class="dropdown-item" href="delivery/profile">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Thông tin tài khoản
+                </a>
+                <a class="dropdown-item" href="delivery/changePass">
+                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Đổi mật khẩu
+                </a>
+                @endif
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
+                <a class="dropdown-item" href="{{ route('logout') }}">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Đăng xuất
                 </a>
             </div>
         </li>

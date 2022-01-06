@@ -18,7 +18,8 @@
     bottom: 82px;
 }
 .chat-screen .chat-header {
-    background-image: linear-gradient(to right, #673ab7, #813bcb, #9e38de, #bc32ef, #dc22ff);
+    background-image: linear-gradient(to right, #f3140c, #ff2600, #fd2600, #fc3c01, #fa4700);
+    /* background-image: linear-gradient(to right, #673ab7, #813bcb, #9e38de, #bc32ef, #dc22ff); */
     border-radius: 15px 15px 0 0;
     padding: 15px;
     display: block;
@@ -71,7 +72,7 @@ svg.message{
     border-radius: 30px;
 }
 .chat-screen .chat-mail button {
-    background-image: linear-gradient(to right, #673ab7, #813bcb, #9e38de, #bc32ef, #dc22ff);
+    background-image: linear-gradient(to right, #f3140c, #ff2600, #fd2600, #fc3c01, #fa4700);
     border: none;
     padding: 0.58rem 1.25rem;
     transition: transform 0.5s ease;
@@ -130,7 +131,8 @@ svg.message{
     display: table;
 }
 .chat-screen .chat-body .chat-bubble.me {
-    background-image: linear-gradient(to right, #673ab7, #813bcb, #9e38de, #bc32ef, #dc22ff);
+    background-image: linear-gradient(to right, #f3140c, #ff2600, #fd2600, #fc3c01, #fa4700);
+    /* background-image: linear-gradient(to right, #673ab7, #813bcb, #9e38de, #bc32ef, #dc22ff); */
     color: #fff;
     border-radius: 15px 0px 15px 15px;
     float: right;
@@ -254,7 +256,7 @@ svg.message{
     right: 20px;
     height: 50px;
     width: 50px;
-    background-image: linear-gradient(to right, #673ab7, #813bcb, #9e38de, #bc32ef, #dc22ff);
+    background-image: linear-gradient(to right, #f3140c, #ff2600, #fd2600, #fc3c01, #fa4700);
     z-index: 9999;
     border-radius: 30px;
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);

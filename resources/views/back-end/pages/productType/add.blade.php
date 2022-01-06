@@ -6,11 +6,11 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" role="form">
+        <form class="form-horizontal" role="form" id="form-productType">
       		<div class="form-group">
     				<label for="">Tên loại sản phẩm</label>
-    				<input name="name" type="text" class="form-control" id="name-productType-add" placeholder="Nhập vào tên loại sản phẩm">
-    				<!-- <p class="error text-center alert alert-danger hidden"></p> -->
+    				<input name="name" type="text" required class="form-control" id="name-productType-add" placeholder="Nhập vào tên loại sản phẩm">
+    				<span class="form-message"></span>
     			</div>
           <div class="form-group">
             <label for="">Danh mục</label>
@@ -29,16 +29,16 @@
     				</select>
     				<!-- <p class="error text-center alert alert-danger hidden"></p> -->
     			</div>
-        </form>
-      </div>
           <div class="modal-footer">
-            <button class="btn btn-success" type="submit" id="add-productType">
+            <button class="btn btn-success" type="submit">
               Thêm mới
             </button>
             <button class="btn btn-warning" type="button" data-dismiss="modal">
               Đóng
             </button>
           </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

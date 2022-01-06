@@ -14,4 +14,18 @@ class District extends Model
     	'name','type','idCity',
     ];
 
+	public function Ward() 
+	{
+		return $this->hasMany('App\Models\Ward','idDistrict','id');
+	}
+
+    public function City() 
+	{
+		return $this->belongsTo('App\Models\City','idCity','id');
+	}
+
+	function getDistrict($idCity) {
+		return $this->where('idCity',$idCity)->get();
+	}
+
 }

@@ -10,11 +10,11 @@
             @csrf
             <div class="form-group">
                 <label for="">ID :</label>
-                <input name="id" type="text" class="form-control" id="id-banner-edit" disabled>
+                <input name="id" type="text" class="form-control" id="id-banner-edit" disabled required>
             </div>
             <div class="form-group">
                 <label for="">Tên banner</label>
-                <input name="name" type="text" class="form-control" id="name-banner-edit">
+                <input name="name" type="text" class="form-control" id="name-banner-edit" required>
             </div>         
             <div class="form-group">
                 <label for="" style="display: block">Ảnh banner</label>

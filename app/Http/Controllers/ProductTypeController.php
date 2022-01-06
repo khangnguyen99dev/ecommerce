@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ProductTypeController extends Controller
 {
+    protected $productType;
+    public function __construct(ProductType $productType) {
+        $this->productType = $productType;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +19,7 @@ class ProductTypeController extends Controller
      */
     public function index()
     {
-        $productType = ProductType::orderBy('id','desc')->paginate(6);
+        $productType = ProductType::orderBy('id','DESC')->get();
 
         $category = Category::where('status',1)->get();
 
@@ -96,11 +100,11 @@ class ProductTypeController extends Controller
      */
     public function destroy($id)
     {
-        $productType = ProductType::find($id)->delete();
+        $productType = $this->productType->deleteProductType($id);
         if($productType){
-            return response()->json(['message'=>'Xóa thành công']);
+            return response()->json($productType);
         }else{
-            return response()->json(['message'=>'Có lỗi trong quá trình thực hiện']);
+            return response()->json(['error'=>'Có lỗi trong quá trình thực hiện']);
         }
         
     }

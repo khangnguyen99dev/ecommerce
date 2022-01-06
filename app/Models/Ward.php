@@ -14,4 +14,12 @@ class Ward extends Model
     	'name','type','idDistrict',
     ];
 
+    public function District() 
+	{
+		return $this->belongsTo('App\Models\District','idDistrict','id');
+	}
+
+	function getWard($idDistrict) {
+		return $this->where('idDistrict',$idDistrict)->get();
+	}
 }

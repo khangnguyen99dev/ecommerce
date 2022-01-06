@@ -1030,7 +1030,7 @@
 }
 
 .product-vouchers__btn-save:hover {
-    background-color: #f8642e;
+    background-color:var(--var-hover);
 }
 
 .product-hot-sales {
@@ -1172,4 +1172,47 @@
 .product-reviews__comment {
     font-size: 0.875rem;
     text-align: center;
+}
+
+.product-reviews__comment.text-comment {
+    font-size: 18px;
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 10px;
+}
+
+
+div#pagination-comment {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.product__status-rating-star-none {
+    font-size: 0.8rem;
+    color: rgb(213, 213, 213);
+}
+
+
+.pagination-item__icon {
+    font-size: 0.8rem;
+}
+
+.product-reviews__rating-star-none{
+    color: rgb(213, 213, 213);
+}
+
+div#pagination-rating {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-delete__comment{
+    font-size: 0.7rem;
+    color: rgba(0,0,0,0.6);
+    padding: 0 0 0 10px;    
+}
+
+.btn-delete__comment:hover {
+    color: var(--var-color);
+    cursor: pointer;
 }

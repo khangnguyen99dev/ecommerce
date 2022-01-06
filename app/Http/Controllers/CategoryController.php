@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
-
 class CategoryController extends Controller
 {
+    protected $category;
+    public function __construct(Category $category)
+    {
+        $this->category = $category;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -95,8 +99,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
-        $category ->delete();
-        return response()->json();
+        $category = $this->category->deleteCategory($id);
+
+        if($category) {
+            return Response()->json($category);
+        }else{
+            return Response()->json(['error'=>'Có lỗi trong quá trình thực hiện']);
+        }          
     }
 }

@@ -6,20 +6,20 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" role="modal">
+        <form class="form-horizontal" role="modal" id="form-edit-category">
           <div class="form-group">
             <label for="">ID :</label>
-            <input name="name" type="text" class="form-control" id="id-edit" disabled>
+            <input name="name" required type="text" class="form-control" id="id-edit" disabled>
             <!-- <p class="error text-center alert alert-danger hidden"></p> -->
           </div>
           <div class="form-group">
             <label for="">Tên danh mục :</label>
-            <input name="name" type="text" class="form-control" id="name-edit" >
+            <input name="name" required type="text" class="form-control" id="name-edit" >
             <!-- <p class="error text-center alert alert-danger hidden"></p> -->
           </div>
           <div class="form-group">
             <label for="">Slug :</label>
-            <input name="name" type="text" class="form-control" id="slug-edit">
+            <input name="name" required type="text" class="form-control" id="slug-edit">
             <!-- <p class="error text-center alert alert-danger hidden"></p> -->
           </div>
           <div class="form-group">
@@ -30,12 +30,12 @@
             </select>
             <!-- <p class="error text-center alert alert-danger hidden"></p> -->
           </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Lưu</button>
+    
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Đóng</button>
+          </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success" id="update-category">Lưu</button>
-
-        <button type="button" class="btn btn-warning" data-dismiss="modal">Đóng</button>
       </div>
     </div>
   </div>

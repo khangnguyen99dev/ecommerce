@@ -8,14 +8,18 @@ use App\Models\ProductType;
 use Illuminate\Http\Request;
 use App\Models\ImageLibrary;
 use App\Services\ImageService;
-
+use App\Models\Promotion;
+use Auth;
 class ProductController extends Controller
 {
     protected $imageService;
-    public function __construct(ImageService $imageService)
+    protected $product;
+    public function __construct(ImageService $imageService, Product $product)
     {      
         $this->image_service = $imageService;
+        $this->product = $product;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,10 +27,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::orderBy('id','desc')->paginate(4);
+        $product = Product::with(['Promotion'])->orderBy('id','desc')->get();
+        $products = Product::where('idPromotion',1)->get();
         $category = Category::where('status',1)->get();
         $productType = ProductType::where('status',1)->get();
-        return view('back-end.pages.product.index', ['product' => $product,'category' => $category, 'productType' => $productType]);
+        $promotion = Promotion::where('endDay','>',now())->get();
+        return view('back-end.pages.product.index', ['product' => $product,'category' => $category, 'productType' => $productType,'promotion'=>$promotion,'products'=>$products]);
     }
 
     /**
@@ -36,9 +42,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        $promotion = Promotion::where('endDay','>',now())->get();
         $category = Category::where('status',1)->get();
         $productType = ProductType::where('status',1)->get();
-        return view('back-end.pages.product.add',['category' => $category, 'productType' => $productType]);
+        return view('back-end.pages.product.add',['category' => $category, 'productType' => $productType, 'promotion'=>$promotion]);
     }
 
     /**
@@ -68,16 +75,17 @@ class ProductController extends Controller
             if($this->image_service->checkFile($file) == 1) {
                 $fileName = $this->image_service->moveImage($file,'assets/img/upload/product/');
                 if($fileName != 0) {
-                    $promotional = $request->promotional;
+                    $idPromotion = $request->idPromotion;
+                    $promotion = Promotion::find($idPromotion);
                     $data = $request->all();
                     $oldPrice = $request->oldPrice;
                     $data['slug'] = utf8tourl($request->name);
                     $data['image'] = $fileName;
                     $data['sold'] = "0";
                     $data['react'] = "0";
-                    $data['currentPrice'] = $oldPrice-($promotional*$oldPrice)/100;
+                    $data['currentPrice'] = $oldPrice-($promotion->promotional*$oldPrice)/100;
                     $product = Product::create($data); 
-                    if($mutipleImage){
+                    if(isset($mutipleImage)){
                         $idproduct = $product->id;
                         foreach($mutipleImage as $value) {
                             $insertImage[] = [
@@ -164,16 +172,14 @@ class ProductController extends Controller
         }else{
             $data['image'] = $product->image;
         }
-        $promotional = $request->promotional;
-        if(isset($promotional) && $promotional < 100){                 
-            $oldPrice = $request->oldPrice;
-            $data['currentPrice'] = $oldPrice-($promotional*$oldPrice)/100;
-        }else{
-            return response()->json(['error'=>'Giảm giá phải nhỏ hơn 100%']);
-        } 
+        $idPromotion = $request->idPromotion;
+        $promotion = Promotion::find($idPromotion);
+        $oldPrice = $request->oldPrice;
+        $data['currentPrice'] = $oldPrice-($promotion->promotional*$oldPrice)/100;
         $product->update($data);
         $product['nameCategory'] = $product->Category['name'];
         $product['nameProductType'] = $product->ProductType['name'];
+        $product['Promotion'] = $product->Promotion['promotional'];
         if(isset($mutipleImage)){
             $idproduct = $product->id;
             foreach($mutipleImage as $value) {
@@ -194,18 +200,21 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
-        $this->image_service->deleteFile($product->image,'assets/img/upload/product/');
-        $product->delete();
-
-        $img_library = ImageLibrary::where('idProduct',$id)->get();
-        if(count($img_library) > 0) {
-            foreach($img_library as $value) {
-                $this->image_service->deleteFile($value->path,'assets/img/upload/product/');
-                $value->delete();
+        try {
+            $product = Product::find($id);
+            $product->delete();
+            $this->image_service->deleteFile($product->image,'assets/img/upload/product/');
+            $img_library = ImageLibrary::where('idProduct',$id)->get();
+            if(count($img_library) > 0) {
+                foreach($img_library as $value) {
+                    $this->image_service->deleteFile($value->path,'assets/img/upload/product/');
+                    $value->delete();
+                }
             }
-        }
-        return response()->json(['success'=>'Xóa thành công sản phẩm']);
+            return response()->json(['success'=>'Xóa thành công sản phẩm']);
+        } catch (\Throwable $th) {
+            return Response()->json(['error'=>'Có lỗi trong quá trình thực hiện']);
+        }      
     }
 
     public function deleteImage($id) {
@@ -215,4 +224,34 @@ class ProductController extends Controller
         $img_library->delete();
         return response()->json(['id'=>$id]);
     }
+
+    public function apiProduct()
+    {
+        $product = $this->product->getProduct();
+        return response()->json($product, 200);     
+    }
+
+    public function productRelate($id)
+    {
+        $products = $this->product->productRelate($id);
+        return Response()->json($products);
+    }
+
+    public function addPromotionProduct(Request $request)
+    {
+        if(Auth::check()) {
+            $idProduct = $request->idProduct;
+            $result = $this->product->addPromotionProduct($request->idProduct, $request->idPromotion);
+            return Response()->json($result);
+        }else{
+            return Response()->json(['error'=>'Vui lòng đăng nhập']);
+        }
+    }
+
+    public function getProductById($id)
+    {
+        $product = $this->product->getProductById($id);
+        return Response()->json($product);
+    }
+
 }

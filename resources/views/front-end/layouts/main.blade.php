@@ -8,24 +8,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">​
-    <link rel="stylesheet" href="assets/owlcarousel/assets/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/owlcarousel/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/owlcarousel/assets/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/owlcarousel/assets/owl.theme.default.min.css')}}">
 
-    <link rel="stylesheet" type="text/css" href="assets/front-end/CSS/base.css" />
-    <link rel="stylesheet" type="text/css" href="assets/front-end/CSS/main.css" />
-    <link rel="stylesheet" type="text/css" href="assets/front-end/CSS/grid.css" />
-    <link rel="stylesheet" type="text/css" href="assets/front-end/CSS/responsive.css" />
-    <link rel="stylesheet" href="assets/front-end/fonts/fontawesome-free-5.14.0/css/all.min.css" />
-    <link rel="stylesheet" type="text/css" href="assets/front-end/CSS/product-info.css" />
-    <link rel="stylesheet" type="text/css" href="assets/front-end/CSS/product-cart.css" />
-    <link rel="stylesheet" href="assets/css/toastr.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/front-end/CSS/base.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/front-end/CSS/main.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/front-end/CSS/grid.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/front-end/CSS/responsive.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/front-end/CSS/product-info.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/front-end/fonts/fontawesome-free-5.14.0/css/all.min.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/front-end/CSS/product-cart.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/toastr.css')}}">
 
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="{{ asset('assets/js/pusher.min.js')}}"></script>
+    <script src="{{ asset('assets/js/axios.min.js')}}"></script>
 
 </head>
-<script src="assets/back-end/vendor/jquery/jquery.min.js"></script>
-<script src="assets/owlcarousel/owl.carousel.min.js"></script>
-
+<script src="{{ asset('assets/back-end/vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{ asset('assets/owlcarousel/owl.carousel.min.js')}}"></script>
 <body>
 
     <!-- Block Element Modifier -->
@@ -49,15 +49,9 @@
     </div>
     <div id="message-fixed"></div>
 </body>
-<script src="assets/front-end/Javascript/bugs.js"></script>
-<!-- <script src="assets/front-end/Javascript/validator.js"></script> -->
-<!-- <script>
-    Validator('#register-form', '.auth-form__group', 3);
-    Validator('#login-form', '.auth-form__group', 3);
-</script> -->
-<!-- <script src="assets/front-end/Javascript/handleform.js"></script> -->
-<script src="assets/js/toastr.min.js"></script>
-<script src="assets/js/pagination.js"></script>
+<script src="{{ asset('assets/front-end/Javascript/bugs.js')}}"></script>
+<script src="{{ asset('assets/js/toastr.min.js')}}"></script>
+<script src="{{ asset('assets/js/pagination.js')}}"></script>
 
 @if(session('message'))
 <script>
@@ -77,11 +71,7 @@
 <script>
     let id = "{{Auth::id()}}";
     if(id){
-        fetch('http://kanestore.com/message')
-        .then(response => response.text())
-        .then(blob => {
-            $('#message-fixed').html(blob);
-        });
+        $('#message-fixed').load('http://kanestore.com/message');
     }
 </script>
 </html>

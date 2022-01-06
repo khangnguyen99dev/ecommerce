@@ -141,4 +141,9 @@ class BannerController extends Controller
             return response()->json(['error'=>'Có lỗi trong quá trình thực hiện']);
         }
     }
+
+    public function getBanner()
+    {
+        return view('back-end.pages.banner.index', ['banner'=> $this->banner->getAllList()]);
+    }
 }

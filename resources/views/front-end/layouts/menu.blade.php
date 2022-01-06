@@ -13,19 +13,19 @@
         <div class="category__heading">Danh mục</div>
     </div>
     <ul class="category-list" id="category-list">
-        <li class="category-item category__item-hover category-item-list category-item--active">
-            <a href="#"   class="category-item__link" id="all-product">Tất cả sản phẩm</a>
+        <li class="category-item category__item-hover category-item-list">
+            <a href="{{ route('category')}}"  class="category-item__link categoryall " data-id="all" data-slug="product">Tất cả sản phẩm</a>
         </li>
-        @foreach($category as $idCategory => $valueCategory)
+        @foreach($category as $key => $valueCategory)
             @if(count($category) > 0)
             <li class="category-item category__item-hover category-item-list">
-                <a href="#" idCategory="{{ $valueCategory->id}}" class="category-item__link">{{ $valueCategory->name}}</a>
+                <a href="" data-id="{{ $valueCategory->id}}" data-slug="{{ $valueCategory->slug}}" class="category-item__link category{{ $valueCategory->id}}">{{ $valueCategory->name}}</a>
                 <i class="category-item-icon fas fa-chevron-right"></i>
                 <ul class="category__item-list">
                     @foreach($productType as $idProductType => $valueProductType)
                         @if($valueCategory->id == $valueProductType->idCategory)
                             <li class="category__item-list-item">
-                                <a href="#" idProductType="{{ $valueProductType->id }}" class="category__list-item-link">{{ $valueProductType->name}}</a>
+                                <a href="" data-slug="{{ $valueProductType->slug}}" data-id="{{ $valueProductType->id }}" class="category__list-item-link productType{{ $valueProductType->id}}">{{ $valueProductType->name}}</a>
                             </li>
                         @endif
                     @endforeach
@@ -33,9 +33,9 @@
             </li>
             @endif
         @endforeach
-        <li class="category-item category__item-hover category-item-list">
+        <!-- <li class="category-item category__item-hover category-item-list">
             <a href="#"   class="category-item__link">Dịch vụ</a>
-        </li>
+        </li> -->
         <!-- category-item--active -->
     </ul>
 </nav>

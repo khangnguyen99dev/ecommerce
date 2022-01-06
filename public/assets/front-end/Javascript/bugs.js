@@ -46,6 +46,19 @@ function remove() {
 				        	if($('#cart').hasClass('cart-bundle')){
 				        		document.getElementById("select-all-checkbox").innerHTML = `Chọn tất cả (${data.cartCount})`;
 				        		$('.cart-item'+id).remove();
+                                if($('.cart-item__group').length == 0){
+                                    let html=`
+                                    <div class="cart-empty-page__content">
+                                        <figure class="cart-empty-page__content-image">
+                                            <img src="../assets/front-end/Images/no-cart.png">
+                                        </figure>
+                                        <p class="cart-empty-page__content-text">Giỏ hàng của bạn còn trống.</p>
+                                        <a href="/" class="btn btn-buy">Mua ngay</a>
+                                    </div>
+                                    `;
+
+                                    $('#cart-product').html(html);
+                                }
 				        	}
 				        	
 				        	if($('.header__cart-list-item').find(".header__cart-item").length == 0){
@@ -145,31 +158,61 @@ function encode(str) {
     return str;
 }
 
-const search = () => {
-    products
-        .then((res) => {
-            $('#search').keyup(() => {
-                $('#result-search').html('');
-                let searchField = encode($('#search').val()).toLowerCase();
-                $('.header__search-history').show();
-                $.each(res, (key,value) => {
-                    if(encode(value.name).toLowerCase().search(searchField) != -1) {
-                        $('#result-search').append(`
-                            <li class="header__search-history-item">
-                            		<img src="assets/img/upload/product/${value.image}" alt="${value.name}" style="width: 30px; height: 30px">
-                                    <a href="${value.slug}_${value.id}.html" class="header__search-history-item-link">${value.name}</a>
-                            </li>
-                        `);
-                    }
+
+$(document).on('keyup', '#search', function (e) {
+    $('#result-search').html('');
+    if($('#search').val() != ''){
+        let searchField = encode($('#search').val()).toLowerCase();
+        $('.header__search-history').show();
+        $.ajax({
+            type: 'GET',
+            url: '/search/'+searchField,
+            success: (data) => {
+                let html = '';
+                data.map((value)=> {
+                    html+=`
+                    <li class="header__search-history-item">
+                            <img src="../assets/img/upload/product/${value.image}" alt="${value.name}" style="width: 30px; height: 30px">
+                            <a href="/${value.slug}_${value.id}.html" class="header__search-history-item-link">${value.name}</a>
+                    </li>             
+                    `;
                 })
 
-            $('#header-search').mouseleave((e) => {
-            	$('.header__search-history').hide();
-            })
-
-            })
+                $('#result-search').html(html);
+            }
         })
-}
+    }
+})
+
+
+$('#header-search').mouseleave((e) => {
+    $('.header__search-history').hide();
+})
+// const search = () => {
+//     products
+//         .then((res) => {
+//             $('#search').keyup(() => {
+//                 $('#result-search').html('');
+//                 let searchField = encode($('#search').val()).toLowerCase();
+//                 $('.header__search-history').show();
+//                 $.each(res, (key,value) => {
+//                     if(encode(value.name).toLowerCase().search(searchField) != -1) {
+//                         $('#result-search').append(`
+//                             <li class="header__search-history-item">
+//                             		<img src="assets/img/upload/product/${value.image}" alt="${value.name}" style="width: 30px; height: 30px">
+//                                     <a href="${value.slug}_${value.id}.html" class="header__search-history-item-link">${value.name}</a>
+//                             </li>
+//                         `);
+//                     }
+//                 })
+
+//             $('#header-search').mouseleave((e) => {
+//             	$('.header__search-history').hide();
+//             })
+
+//             })
+//         })
+// }
 
 
 function slider() {
@@ -196,5 +239,3 @@ function slider() {
         }
     })
 }
-
-

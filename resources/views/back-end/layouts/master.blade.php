@@ -18,12 +18,13 @@
     <!-- Custom fonts for this template-->
     <link href="assets/back-end/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-    <link href="assets/back-end/css/nunito.css" rel="stylesheet">
-
+    {{-- <link href="assets/back-end/css/nunito.css" rel="stylesheet"> --}}
+    <link href="assets/back-end/css/morris.css" rel="stylesheet">
+    <link href="assets/back-end/css/jquery-ui.css" rel="stylesheet">
 <!--     <link href="assets/back-end/css/toastr.css" rel="stylesheet">
 
     <link href="assets/back-end/css/toastr.min.css" rel="stylesheet"> -->
-
+    <link href="assets/back-end/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="assets/back-end/css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -33,8 +34,11 @@
 </head>
 
 <body id="page-top">
+<script src="assets/js/Validator.js"></script>
 <script src="assets/back-end/vendor/jquery/jquery.min.js"></script>
-
+<script src="assets/back-end/js/morris.min.js"></script>
+<script src="assets/back-end/js/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -110,9 +114,15 @@
     <script src="assets/back-end/js/sb-admin-2.min.js"></script>
     
     <script src="assets/js/toastr.min.js"></script>
-    <script src="assets/back-end/js/ajax.js"></script>
+    <!-- <script src="assets/back-end/js/ajax.js"></script> -->
+
+    <script src="assets/back-end/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/back-end/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <script src="assets/ckeditor/ckeditor.js"></script>
+    <!-- Page level plugins -->
+    
+
 </body>
 
 </html>

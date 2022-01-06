@@ -7,14 +7,22 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\City;
+use App\Models\Customer;
 use Cart;
 use Auth;
 use DB;
 use Exception;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class CartController extends Controller
 {
+
+    protected $customer;
+
+    public function __construct(Customer $customer) {
+        $this->customer = $customer;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -59,7 +67,7 @@ class CartController extends Controller
             }
             if($total == $request->money){
                 $order = $request->all();
-                $order['code_order'] = $this->generateRandomString(20);
+                $order['code_order'] = Str::upper(Str::random(20));
                 $order['status'] = 0;
                 $order['idUser'] = Auth::user()->id;
                 DB::beginTransaction();
@@ -151,14 +159,36 @@ class CartController extends Controller
 
     public function addCart($id, Request $request) {
         if(Auth::check()){
-            $product = Product::find($id);
-
-            $cart = ['id' => $id, 'name' => $product->name, 'qty' => $request->quantity, 'price' => $product->currentPrice, 'options' => ['image' => $product->image,'oldPrice' => $product->oldPrice,'Category'=> $product->Category['name']], 'weight' => 0];
-    
-            Cart::add($cart);
-            $cartCount = Cart::count();
-            $cartContent = Cart::content();
-            return Response()->json(['cartContent'=>$cartContent,'cartCount'=>$cartCount,'message'=>'Đã thêm sản phẩm vào giỏ hàng']);
+            $product = Product::with(['Promotion'])->find($id);
+            if($request->quantity <= $product->quantity){
+                $cart = [
+                    'id' => $id,
+                    'name' => $product->name,
+                    'qty' => $request->quantity,
+                    'price' => $product->currentPrice,
+                    'options' => [
+                        'image' => $product->image,
+                        'oldPrice' => $product->oldPrice,
+                        'Category'=> $product->Category['name'],
+                        'promotional'=> $product->Promotion->promotional,
+                        ],
+                        'weight' => 0
+                    ]; 
+                foreach(Cart::content() as $key => $value){
+                    if($value->id == $id){
+                        $qty = $request->quantity + $value->qty;
+                        if($qty > $product->quantity){
+                            return Response()->json(['mesesage'=>'Số lượng sản phẩm không đủ!']);
+                        }
+                    }
+                }
+                Cart::add($cart);
+                $cartCount = Cart::count();
+                $cartContent = Cart::content();
+                return Response()->json(['cartContent'=>$cartContent,'cartCount'=>$cartCount,'message'=>'Đã thêm sản phẩm vào giỏ hàng']);
+            }else{
+                return Response()->json(['error'=>'Số lượng trong kho không đủ!']);
+            }
         }else{
             return Response()->json(['message'=>'Bạn vui lòng đăng nhập trước khi mua hàng!']);
         }
@@ -178,21 +208,14 @@ class CartController extends Controller
                     $qtyProduct+=$object->qty;
                 }
             }
-            $customer = Auth::user()->Customer;
+
+            
+            $customer = $this->customer->getAddress(Auth::id());
+
             $city = City::orderBy('id','ASC')->get();
             return view('front-end.pages.checkout',['cart'=>$cart,'customer'=>$customer,'total'=>$total,'quantity'=>$qtyProduct,'city'=>$city]);
         }else{
             return back()->with('message','Bạn cần đăng nhập trước khi xem giỏ hàng');
         }
-    }
-
-    function generateRandomString($length) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
     }
 }

@@ -1,7 +1,6 @@
 
-<!-- <link href="assets/front-end/css/chat/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> -->
-<link href="assets/front-end/css/chat/css/main.css" rel="stylesheet" type="text/css" />
-<link href="assets/front-end/css/chat/css/chatBot.css" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('assets/front-end/css/chat/css/main.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/front-end/css/chat/css/chatBot.css')}}" rel="stylesheet" type="text/css"/>
 <div class="chat-screen">
     <div class="chat-header">
         <div class="chat-header-title">
@@ -54,7 +53,7 @@
     </div>
 </div>
 <div class="chat-bot-icon">
-    <img src="assets/front-end/css/chat/img/we-are-here.svg"/>
+    <!-- <img src="assets/front-end/css/chat/img/we-are-here.svg"/> -->
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square animate"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x "><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 </div>
@@ -106,11 +105,11 @@
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
         //   alert(JSON.stringify(data));
+        // <p class="date">${data.date}</p>
             if (my_id == data.from) {
                 $('.scollmessage').append(`
                 <div class="chat-bubble me">
                     ${data.message}
-                    <p class="date">${data.date}</p>
                 </div>
                 `);
             } else if (my_id == data.to) {
@@ -120,7 +119,7 @@
                     $('.scollmessage').append(`
                     <div class="chat-bubble you">
                         ${data.message}
-                        <p class="date">${data.date}</p>
+
                     </div>
                     `);
                 } else {

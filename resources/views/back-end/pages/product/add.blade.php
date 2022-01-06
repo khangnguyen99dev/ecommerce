@@ -11,27 +11,27 @@
             <h5 class="m-0 font-weight-bold text-primary">Thêm sản phẩm</h5>
         </div>
         <div class="card-body pt-1">
-            <form id="form-product" class="form-horizontal" role="form" enctype="multipart/form-data">
+            <form id="form-product-add" class="form-horizontal" role="form" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="">Tên sản phẩm</label>
-                    <input name="name" type="text" class="form-control" id="name-product-add" placeholder="Nhập vào tên sản phẩm">
-                    <!-- <p class="error text-center alert alert-danger hidden"></p> -->
+                    <input name="name" type="text" required class="form-control" id="name-product-add" placeholder="Nhập vào tên sản phẩm">
+                    <span class="form-message"></span>
                 </div>
                 <div class="form-group">
                     <label for="">Số lượng</label>
-                    <input name="quantity" type="number" class="form-control" id="quantity-product-add">
-                    <!-- <p class="error text-center alert alert-danger hidden"></p> -->
+                    <input name="quantity" required type="number" class="form-control" id="quantity-product-add">
+                    <span class="form-message"></span>
                 </div>
                 <div class="form-group">
                     <label for="">Giá</label>
-                    <input name="oldPrice" type="number" class="form-control" id="oldPrice-product-add">
-                    <!-- <p class="error text-center alert alert-danger hidden"></p> -->
+                    <input name="oldPrice" required type="number" class="form-control" id="oldPrice-product-add">
+                    <span class="form-message"></span>
                 </div>
                 <div class="form-group">
                     <label for="">Ảnh đại diện</label>
-                    <input name="image" type="file" class="form-control" id="image-product-add">
-                    <!-- <p class="error text-center alert alert-danger hidden"></p> -->
+                    <input name="image" required type="file" class="form-control" id="image-product-add">
+                    <span class="form-message"></span>
                 </div>
                 <div class="form-group">
                     <label for="">Ảnh liên quan</label>
@@ -40,13 +40,17 @@
                 </div>
                 <div class="form-group">
                     <label for="">Khuyến mãi</label>
-                    <input name="promotional" type="number" class="form-control" id="promotional-product-add">
+                    <select name="idPromotion" id="promotion-product-add" class="form-control" required="required">
+                        @foreach($promotion as $key => $value)
+                        <option value="{{ $value->id }}">{{ $value->name }}</option>
+                        @endforeach
+                    </select>
                     <!-- <p class="error text-center alert alert-danger hidden"></p> -->
                 </div>
                 <div class="form-group">
                     <label for="">Mô tả</label>
                     <textarea name="description" id="description-product-add" cols="5" rows="5" class="ckeditor form-control"></textarea>
-                    <!-- <p class="error text-center alert alert-danger hidden"></p> -->
+                    <span class="form-message"></span>
                 </div>
                 <div class="form-group">
                     <label for="">Danh mục</label>
@@ -86,4 +90,6 @@
         </div>
     </div>
 </div>
+
+<script src="assets/back-end/javascript/productadd.js"></script>
 @endsection

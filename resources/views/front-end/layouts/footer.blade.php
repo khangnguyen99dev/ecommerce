@@ -66,13 +66,13 @@
             <div class="col l-2-4 m-8 c-12">
                 <h3 class="footer__heading">Vào cửa hàng trên ứng dụng</h3>
                 <div class="footer__download">
-                    <img src="" alt="Download QR" class="footer__download-qr"></img>
+                    {{-- <img src="" alt="Download QR" class="footer__download-qr"></img> --}}
                     <div class="footer__download-apps">
                         <a href="" class="footer__download-app-link">
-                            <img src="assets/front-end/Images/google_play.png" alt="Google play" class="footer__download-app-img"></img>
+                            <img src="../assets/front-end/Images/google_play.png" alt="Google play" class="footer__download-app-img"></img>
                         </a>
                         <a href="" class="footer__download-app-link">
-                            <img src="assets/front-end/Images/app_store.png" alt="App store" class="footer__download-app-img"></img>
+                            <img src="../assets/front-end/Images/app_store.png" alt="App store" class="footer__download-app-img"></img>
                         </a>
                     </div>
                 </div>

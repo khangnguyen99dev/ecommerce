@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+@if(sizeof($cart) > 0)
 <div class="grid wide" id="cart-product">
     <div class="cart-suggestion">
         <i class="fas fa-truck-loading"></i>
@@ -55,8 +56,7 @@
             <button class="cart-page-shop__header-btn-chat">
                 <i class="cart-page-shop__header-icon fas fa-comment-alt"></i>
             </button>
-        </div> -->
-        
+        </div> --> 
         <div class="cart-page-shop__container-items">
             <div class="cart-bundle" id="cart">   
                 @foreach($cart as $key => $value)
@@ -65,7 +65,7 @@
 
                     <div class="cart-item__group">
                         <div class="cart-checkbox">
-                            <input class="cart-checkbox__input" type="checkbox" data-check="{{ $value->id }}" id="check{{ $value->id }}" name="check[]">
+                            <input class="cart-checkbox__input" type="checkbox" data-check="{{ $value->id }}" id="check{{ $value->id }}" name="check[]" checked>
                             <div class="cart-checkbox__bgc"></div>
                         </div>
 
@@ -87,7 +87,9 @@
                     </div> -->
 
                     <div class="cart-item__price">
+                        @if($value->options['promotional'] > 0)
                         <div class="cart-item__price-old">{{ number_format($value->options['oldPrice'],0,",",".") }}₫</div>
+                        @endif
                         <div class="cart-item__price-current">{{ number_format($value->price,0,",",".") }}₫</div>
                     </div>
 
@@ -160,7 +162,7 @@
         <div class="cart-page-footer__row3">
             <div class="cart-page-footer__actions">
                 <div class="cart-checkbox">
-                    <input class="cart-checkbox__input-all" type="checkbox">
+                    <input class="cart-checkbox__input-all" type="checkbox" checked>
                     <div class="cart-checkbox__bgc"></div>
                 </div>
                 <button class="cart-page-footer__actions-btn cart-page-footer__select-all clear-btn" id="select-all-checkbox">Chọn tất cả ({{ Cart::count() }})</button>
@@ -171,7 +173,7 @@
             <div class="cart-page-footer__summary">
                 <div class="cart-page-footer__summary-total">
                     <div class="cart-page-footer__summary-total-text">Tổng tiền hàng (0 sản phẩm):</div>
-                    <div class="cart-page-footer__summary-total-amount" data-alltotal="0">0₫</div>
+                    <div class="cart-page-footer__summary-total-amount" data-alltotal="0">{{substr(str_replace(',','.',Cart::subtotal()),0,-3)}}₫</div>
                 </div>
                 <div class="cart-page-footer__summary-bonus">Nhận thêm: 0 Xu</div>
             </div>
@@ -221,9 +223,20 @@
     </div> -->
 
 </div>
+@else
+<div class="grid wide">
+    <div class="cart-empty-page__content">
+        <figure class="cart-empty-page__content-image">
+            <img src="../assets/front-end/Images/no-cart.png">
+        </figure>
+        <p class="cart-empty-page__content-text">Giỏ hàng của bạn còn trống.</p>
+        <a href="/" class="btn btn-buy">Mua ngay</a>
+    </div>
+</div>
+@endif
 <script>
 
-let products = fetch('http://kanestore.com/api/product')
+let products = fetch('/product')
     .then((res) => {
         return res.json();
     })
@@ -231,27 +244,13 @@ let products = fetch('http://kanestore.com/api/product')
         console.log(err);
     })
 
-// cart
-//     .then((data) => {
-//         return new Promise((resolve, reject) => {
-//             reject();
-//         })
-//     })
-//     .then((data) => {
-//         console.log(data)
-//     })
-//     .catch((error) => {
-//         console.log('co loi')
-//     })
-
 $(document).ready(() => {
-
+    $('input')
     document.querySelector('.header__cart-wrap').style.display = "none";
     addCheckbox();
     allProduct();
     inc();
     dec();
-    search();
 
     $('#checkout').on('click', (e) => {
         e.preventDefault();
@@ -264,7 +263,6 @@ $(document).ready(() => {
                 $('#datasend').append(`<input type="hidden" value="${id}" name="item[]">`);
             }      
         }) 
-        console.log(item)
         if(item.length > 0) {
             $('#formdata').submit();
         }else{
@@ -490,5 +488,47 @@ const dec = () => {
         }        
     })
 }
+
+$(document).on('change','.cart-checkbox__input', function (e) {
+    $.each($('.cart-checkbox__input'),(index,value) => {
+        if(!$(value).is(":checked")){
+            $('.cart-checkbox__input-all').prop('checked', false);
+        }else{
+            $('.cart-checkbox__input-all').prop('checked', true);
+        }
+    })
+})
+
+$(document).on('change', '.shop__qnt-input', function (e) {
+    let idProduct = $(this).attr('id');
+    let qty = $(this).val();
+    let idCart = $(this).data('id');
+    let res = $.ajax({ type: "GET",   
+                        url: '/product/'+idProduct,   
+                        async: false
+                    }).responseJSON;
+    let quantity = res.quantity;
+    if(parseInt(qty)){
+        if(qty > quantity)
+            $(this).val(quantity);
+        else if (qty < 1)
+            $(this).val(1);
+        else
+            $(this).val(qty);
+        
+        // upadte(idCart,qty);
+
+        // $('#'+idProduct).val(qty);
+        // let price  = qty*res.currentPrice;
+
+        // $('#total'+idProduct).html(Intl.NumberFormat().format(price)+'₫');
+
+        // $('#total'+idProduct).attr('data-total',price);
+        // changeTotal();
+        // getQuantity();   
+    }else{
+        toastr['info']('Số lượng không phải là số');
+    }
+})
 </script>
 @endsection

@@ -16,4 +16,17 @@ class ProductType extends Model
 	{
 		return $this->belongsTo('App\Models\Category','idCategory','id');
 	}
+
+	function deleteProductType($id) 
+	{
+		try {
+			$productType = $this->find($id);
+			$productType->delete();
+			return $productType;
+		} catch (\Exception $e) {
+			return false;
+		}
+
+
+	}
 }

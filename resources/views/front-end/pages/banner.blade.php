@@ -5,7 +5,7 @@
 
 $(document).ready((e)=>{
     const banner = async () => {
-        const response = await fetch('http://kanestore.com/api/banner', {
+        const response = await fetch('/banner', {
             method: 'GET',
             dataType: 'json',
         });
@@ -29,7 +29,7 @@ $(document).ready((e)=>{
                 html+=`
                 <div class="item"> 
                     <a href="">
-                        <img src="assets/img/upload/banner/${value.image}" alt="${value.name}">
+                        <img src="../assets/img/upload/banner/${value.image}" alt="${value.name}">
                     </a>
                 </div>
                 `;
@@ -37,9 +37,6 @@ $(document).ready((e)=>{
             html+= `</div>`; 
         return $('#banner').html(html);
     }
-
-    getBanner();
-
 
     const sliderBanner = async () => {
         let data = [];

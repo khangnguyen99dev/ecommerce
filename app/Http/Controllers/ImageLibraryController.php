@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\ImageLibrary;
+use App\Models\ImageLibrary;
 use Illuminate\Http\Request;
 
 class ImageLibraryController extends Controller
 {
+    protected $imageLibrary;
+    public function __construct(ImageLibrary $imageLibrary)
+    {      
+        $this->imageLibrary = $imageLibrary;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -81,5 +86,11 @@ class ImageLibraryController extends Controller
     public function destroy(ImageLibrary $imageLibrary)
     {
         //
+    }
+
+    public function getImageByProduct($id)
+    {
+        $imageLibrary = $this->imageLibrary->getImageByProduct($id);
+        return Response()->json(['wapper'=>$imageLibrary]);
     }
 }

@@ -5,7 +5,7 @@
 
 $(document).ready((e)=>{
     const slider = async () => {
-        const response = await fetch('http://kanestore.com/api/slider', {
+        const response = await fetch('/slider', {
             method: 'GET',
             dataType: 'json',
         });
@@ -29,7 +29,7 @@ $(document).ready((e)=>{
                 html+=`
                 <div class="item"> 
                     <a href="">
-                        <img src="assets/img/upload/slider/${value.image}" alt="${value.name}">
+                        <img src="../assets/img/upload/slider/${value.image}" alt="${value.name}">
                     </a>
                 </div>
                 `;
@@ -37,8 +37,6 @@ $(document).ready((e)=>{
             html+= `</div>`; 
         return $('#slider').html(html);
     }
-
-    getSlider();
 
 
     const owlSlider = async () => {

@@ -15,17 +15,26 @@
             <a href="#" class="create-modal btn btn-success btn-sm mb-1" data-target="#modal-add" data-toggle="modal">
               <i class="fas fa-plus"></i> Thêm danh mục
             </a>
-                <table class="table table-bordered " id="table">
-                    <tr id="title-table">
+            <table class="table table-bordered" id="table" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
                         <th>ID</th>
                         <th>Tên danh mục</th>
                         <th>Slug</th>
                         <th>Trạng thái</th>
-                        <th class="text-center" width="150px">
-                            
-                        </th>
+                        <th>Sự kiện</th>
                     </tr>
-                    {{ csrf_field() }}
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên danh mục</th>
+                        <th>Slug</th>
+                        <th>Trạng thái</th>
+                        <th>Sự kiện</th>
+                    </tr>
+                </tfoot>
+                <tbody>
                     @foreach ($category as $value)
                       <tr class="category{{$value->id}}">
                           <td>{{ $value->id }}</td>
@@ -51,13 +60,17 @@
                           </td>
                       </tr>
                     @endforeach
-                </table>
-                <div class="float-right">{{$category->links()}}</div>
+                </tbody>
+            </table>
             </div>
         </div>
     </div>
 </div>
-
+<script>
+    $(document).ready( function () {
+        $('#table').DataTable();
+    });
+</script>
 {{-- Modal Form Create Post --}}
 
 @include('back-end.pages.category.add')
@@ -70,4 +83,6 @@
 
 {{-- Form Delete Post --}}
 @include('back-end.pages.category.delete')
+
+<script src="assets/back-end/javascript/category.js"></script>
 @endsection

@@ -140,4 +140,9 @@ class SliderController extends Controller
             return response()->json(['error'=>'Có lỗi trong quá trình thực hiện']);
         }
     }
+
+    public function getSlider()
+    {
+        return view('back-end.pages.slider.index', ['slider'=> $this->slider->getAllList()]);
+    }
 }

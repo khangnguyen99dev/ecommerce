@@ -10,17 +10,17 @@
                     @csrf
                     <div class="form-group">
                         <label for="">Tên banner</label>
-                        <input name="name" type="text" class="form-control" id="name-banner-add" placeholder="Nhập vào tên banner">
+                        <input name="name" type="text" class="form-control" id="name-banner-add" placeholder="Nhập vào tên banner" required>
                     </div>
 
                     <div class="form-group">
                         <label for="">Ảnh banner</label>
-                        <input name="image" type="file" class="form-control" id="image-banner-add">
+                        <input name="image" type="file" class="form-control" id="image-banner-add" required>
                     </div>
 
                     <div class="form-group">
                         <label for="description">Mô tả</label>
-                        <textarea name="description" class="form-control" id="description-banner-add" rows="3"></textarea>
+                        <textarea name="description" class="form-control" id="description-banner-add" rows="3" required></textarea>
                     </div>
 
                     <div class="form-group">
